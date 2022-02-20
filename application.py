@@ -1,7 +1,7 @@
 import planner
 import preparation
 
-
+#Comments..
 def generate_planning():
     prep = preparation.Preparation()
     prep.load_courses_done()
