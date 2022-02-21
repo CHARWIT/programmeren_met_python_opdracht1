@@ -1,13 +1,16 @@
+#import course
 import planner
 import preparation
 
-#Comments..
+
 def generate_planning():
     prep = preparation.Preparation()
     prep.load_courses_done()
+    print("Courses done loaded!")
     prep.load_courses_offer()
+    print("Courses offered loaded!")
     my_planner = planner.Planner(prep)
-    print(my_planner.generate())
+    my_planner.generate()
 
 
 generate_planning()

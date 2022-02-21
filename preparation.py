@@ -20,10 +20,13 @@ class Preparation:
         file_path = pathlib.Path(path)
         with file_path.open('r') as f:
             self.done_codes = set(json.load(f))
+        print("Courses done:", self.done_codes)
 
     def load_courses_offer(self):
         path = self.path / pathlib.Path(self.COURSES_OFFER_FILE)
         file_path = pathlib.Path(path)
         with file_path.open('r') as f:
             for info in json.load(f):
+                print(info)
                 self.available_courses.append(course.create_course(info))
+
