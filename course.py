@@ -23,7 +23,6 @@ def determine_courses_to_do(availablecourses, coursesdone):
     coursestodo = [x for x in availablecourses if x.get_code() not in coursesdone]
     return coursestodo
 
-
 def determine_required_pre_knowledge_not_done(coursestodo, coursesdone):
     """ Function that determines which courses of the required preknowledge are not done yet """
     allrequiredcodes = []
@@ -47,22 +46,36 @@ def determine_desired_knowledge_not_done(coursestodo, coursesdone):
 def required_done (required, coursesdone):
     """ Return True if all required courses are done """
     if required == 'geen verplichte voorkennis':
-        return True
+        done = True
     else:
-        return min([r in coursesdone for r in required])
+        done = True
+        for r in required:
+            if r not in coursesdone:
+                done = False
+    return done
 
 def desired_done (desired, coursesdone):
     """ Return True if all desired courses are done """
     if desired == 'geen gewenste voorkennis':
-        return True
+        done = True
     else:
-        return min([d in couresdone for d in desired])
+        done = True
+        for r in desired:
+            if r not in coursesdone:
+                done = False
+    return done
 
-def determine_possible_courses(coursesdone, coursestodo):
-    """ Function that determines which courses are possible based on courses done and required or desired preknowledge """
+
+def determine_possible_courses (coursestodo, coursesdone):
+    """ Function that determines which courses of the desired preknowledge are not done yet """
+    #possiblecourses = []
+    #for x in coursestodo:
+    #    required = x.get_required_courses()
+    #    desired = x.get_desired_courses()
+    #    if required_done(required, coursesdone) and desired_done(desired, coursesdone):
+    #        possiblecourses.append(x)
+    #return possiblecourses
     return [c for c in coursestodo if required_done(c.get_required_courses(), coursesdone) and desired_done(c.get_desired_courses(), coursesdone)]
-
-
 
 def determine_variable_courses(possiblecourses):
     """ Function that determines which variable courses could be done

@@ -17,15 +17,15 @@ class Planner:
     def compute_current_state(self):
         print('Function compute_current_state called')
         self.coursestodo = course.determine_courses_to_do(self.availablecourses,self.coursesdone)
-        print("Courses to do:", self.coursestodo)
-        #print("Nr of courses to do:",len(self.coursestodo))
+        #print("Courses to do:", self.coursestodo)
+        print("Nr of courses to do:",len(self.coursestodo))
         self.requirednotdone =  course.determine_required_pre_knowledge_not_done(self.coursestodo,self.coursesdone)
         print("Required pre knowledge not yet done:",self.requirednotdone)
         self.desirednotdone =  course.determine_desired_knowledge_not_done(self.coursestodo,self.coursesdone)
         print("Desired pre knowledge not yet done:",self.desirednotdone)
 
         self.possiblecourses = course.determine_possible_courses(self.coursestodo, self.coursesdone)
-        print("Possible courses based on preknowledge:", self.possiblecourses)
+        print("Possible courses based on preknowledge:", len(self.possiblecourses))
 
     # TODO: implement
 
