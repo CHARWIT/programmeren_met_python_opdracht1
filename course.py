@@ -44,17 +44,23 @@ def determine_desired_knowledge_not_done(coursestodo, coursesdone):
     desirednotdone = [z for z in alldesiredcodes if z not in coursesdone]
     return desirednotdone
 
-def required_done (coursesdone, cours):
+def required_done (required, coursesdone):
     """ Return True if all required courses are done """
-    return min([c for c in cours.required if cours.required in coursesdone])
+    if not required:
+        return True
+    else:
+        return min([r in coursesdone for r in required])
 
-def desired_done (coursesdone, cours):
+def desired_done (desired, coursesdone):
     """ Return True if all desired courses are done """
-    return min([c for c in cours.desired if cours.desired in coursesdone])
+    if not desired:
+        return True
+    else:
+        return min([d in couresdone for d in desired])
 
-def determine_possible_courses(coursesdone, coursestodo, requirednotdone, desirednotdone):
+def determine_possible_courses(coursesdone, coursestodo):
     """ Function that determines which courses are possible based on courses done and required or desired preknowledge """
-    return [c for c in coursestodo if required_done(cours, coursesdone) and desired_done(cours, coursesdone)]
+    return [c for c in coursestodo if required_done(c.required, coursesdone) and desired_done(c.desired, coursesdone)]
 
 
 
