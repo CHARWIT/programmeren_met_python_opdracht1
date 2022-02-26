@@ -1,6 +1,5 @@
 import datetime
 
-
 def create_course(courseinfo):
     newcourse = Course(courseinfo['code'], courseinfo['naam'],
                 courseinfo['sbu'], courseinfo['startdatum'],
@@ -25,7 +24,7 @@ def determine_courses_to_do(availablecourses, coursesdone):
     return coursestodo
 
 
-def determine_required_pre_knowledge_not_done(coursestodo,coursesdone):
+def determine_required_pre_knowledge_not_done(coursestodo, coursesdone):
     """ Function that determines which courses of the required preknowledge are not done yet """
     allrequiredcodes = []
     for x in coursestodo:
@@ -35,7 +34,7 @@ def determine_required_pre_knowledge_not_done(coursestodo,coursesdone):
     requirednotdone = [z for z in allrequiredcodes if z not in coursesdone]
     return requirednotdone
 
-def determine_desired_knowledge_not_done(coursestodo,coursesdone):
+def determine_desired_knowledge_not_done(coursestodo, coursesdone):
     """ Function that determines which courses of the desired preknowledge are not done yet """
     alldesiredcodes = []
     for x in coursestodo:
@@ -44,6 +43,18 @@ def determine_desired_knowledge_not_done(coursestodo,coursesdone):
                 alldesiredcodes.append(y)
     desirednotdone = [z for z in alldesiredcodes if z not in coursesdone]
     return desirednotdone
+
+def required_done (coursesdone, cours):
+    """ Return True if all required courses are done """
+    return min([c for c in cours.required if cours.required in coursesdone])
+
+def desired_done (coursesdone, cours):
+    """ Return True if all desired courses are done """
+    return min([c for c in cours.desired if cours.desired in coursesdone])
+
+def determine_possible_courses(coursesdone, coursestodo, requirednotdone, desirednotdone):
+    """ Function that determines which courses are possible based on courses done and required or desired preknowledge """
+    return [c for c in coursestodo if required_done(cours, coursesdone) and desired_done(cours, coursesdone)]
 
 
 

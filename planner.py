@@ -5,30 +5,27 @@ class Planner:
     """ Class for planning objects based on the status of the cources"""
     # TODO: implement and add attributes
 
-    def __init__(self, application):
-        self.coursesdone = application.done_codes
+    def __init__(self, preparation):
+        self.coursesdone = preparation.done_codes
         print("Planner - courses done:",self.coursesdone)
-        self.availablecourses = application.available_courses
+        self.availablecourses = preparation.available_courses
         print("Planner - number of available courses:", len(self.availablecourses))
         course.print_courses(self.availablecourses)
-
-
-
-
-
 
     # TODO: implement
 
     def compute_current_state(self):
         print('Function compute_current_state called')
         self.coursestodo = course.determine_courses_to_do(self.availablecourses,self.coursesdone)
+        print("Courses to do:", self.coursestodo)
         print("Nr of courses to do:",len(self.coursestodo))
         self.requirednotdone =  course.determine_required_pre_knowledge_not_done(self.coursestodo,self.coursesdone)
         print("Required pre knowledge not yet done:",self.requirednotdone)
         self.desirednotdone =  course.determine_desired_knowledge_not_done(self.coursestodo,self.coursesdone)
         print("Desired pre knowledge not yet done:",self.desirednotdone)
 
-
+        self.possiblecourses = course.determine_possible_courses(self.coursestodo) #, self.requirednotdone, self.desirednotdone
+        print("Desired pre knowledge not yet done:", self.desirednotdone)
 
     # TODO: implement
 

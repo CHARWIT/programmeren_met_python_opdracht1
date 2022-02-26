@@ -1,7 +1,6 @@
-#import course
+import course
 import planner
 import preparation
-
 
 def generate_planning():
     prep = preparation.Preparation()
@@ -11,6 +10,5 @@ def generate_planning():
     print("Courses offered loaded!")
     my_planner = planner.Planner(prep)
     my_planner.generate()
-
 
 generate_planning()
