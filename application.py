@@ -9,7 +9,7 @@ print("Courses done loaded!")
 prep.load_courses_offer()
 print("Courses offered loaded!")
 my_planner = planner.Planner(prep)
-#my.planner.compute_current_state()
+my_planner.compute_current_state() #Testing...
 #my_planner.generate()
 
 #generate_planning()

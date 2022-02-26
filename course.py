@@ -46,21 +46,21 @@ def determine_desired_knowledge_not_done(coursestodo, coursesdone):
 
 def required_done (required, coursesdone):
     """ Return True if all required courses are done """
-    if not required:
+    if required == 'geen verplichte voorkennis':
         return True
     else:
         return min([r in coursesdone for r in required])
 
 def desired_done (desired, coursesdone):
     """ Return True if all desired courses are done """
-    if not desired:
+    if desired == 'geen gewenste voorkennis':
         return True
     else:
         return min([d in couresdone for d in desired])
 
 def determine_possible_courses(coursesdone, coursestodo):
     """ Function that determines which courses are possible based on courses done and required or desired preknowledge """
-    return [c for c in coursestodo if required_done(c.required, coursesdone) and desired_done(c.desired, coursesdone)]
+    return [c for c in coursestodo if required_done(c.get_required_courses(), coursesdone) and desired_done(c.get_desired_courses(), coursesdone)]
 
 
 

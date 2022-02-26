@@ -7,7 +7,7 @@ class Planner:
 
     def __init__(self, preparation):
         self.coursesdone = preparation.done_codes
-        print("Planner - courses done:", len(self.coursesdone))
+        print("Planner - courses done:", self.coursesdone)
         self.availablecourses = preparation.available_courses
         print("Planner - number of available courses:", len(self.availablecourses))
         #course.print_courses(self.availablecourses)
