@@ -24,7 +24,7 @@ def determine_courses_to_do(availablecourses, coursesdone):
     return coursestodo
 
 def determine_required_pre_knowledge_not_done(coursestodo, coursesdone):
-    """ Function that determines which courses of the required preknowledge are not done yet """
+    # Function that determines which courses of the required preknowledge are not done yet
     allrequiredcodes = []
     for x in coursestodo:
         for y in x.get_required_courses():
@@ -34,7 +34,7 @@ def determine_required_pre_knowledge_not_done(coursestodo, coursesdone):
     return requirednotdone
 
 def determine_desired_knowledge_not_done(coursestodo, coursesdone):
-    """ Function that determines which courses of the desired preknowledge are not done yet """
+    # Function that determines which courses of the desired preknowledge are not done yet
     alldesiredcodes = []
     for x in coursestodo:
         for y in x.get_desired_courses():
@@ -60,33 +60,16 @@ def desired_done (desired, coursesdone):
         done = True
     else:
         done = True
-        for r in desired:
-            if r not in coursesdone:
+        for d in desired:
+            if d not in coursesdone:
                 done = False
     return done
 
-
 def determine_possible_courses (coursestodo, coursesdone):
-    """ Function that determines which courses of the desired preknowledge are not done yet """
-    #possiblecourses = []
-    #for x in coursestodo:
-    #    required = x.get_required_courses()
-    #    desired = x.get_desired_courses()
-    #    if required_done(required, coursesdone) and desired_done(desired, coursesdone):
-    #        possiblecourses.append(x)
-    #return possiblecourses
-    return [c for c in coursestodo if required_done(c.get_required_courses(), coursesdone) and desired_done(c.get_desired_courses(), coursesdone)]
+    """ Function that determines which courses can be done base on required and desired pre knowledge """
+    return [c for c in coursestodo if required_done(c.get_required_courses(), coursesdone)]
 
-def determine_variable_courses(possiblecourses):
-    """ Function that determines which variable courses could be done
-        based on the current pre knowledge
-        :returns list of variable courses which could be done
-    """
-    variablecourses = [x for x in possiblecourses if x.get_fixed_or_variable() == 'variable']
-    return variablecourses
-
-
-def determine_fixed_courses(possiblecourses):
+def determine_fixed_courses (possiblecourses):
     """ Function that determines which courses with a fixed startdate could be done
         based on the current pre knowledge
         :returns list of fixed date courses which could be done
@@ -94,9 +77,23 @@ def determine_fixed_courses(possiblecourses):
     fixedcourses = [x for x in possiblecourses if x.get_fixed_or_variable() == 'fixed']
     return fixedcourses
 
+def determine_variable_courses (possiblecourses):
+    """ Function that determines which variable courses could be done
+        based on the current pre knowledge
+        :returns list of variable courses which could be done
+    """
+    variablecourses = [x for x in possiblecourses if x.get_fixed_or_variable() == 'variable']
+    return variablecourses
 
+def prioritize_desired_done (courselist, coursesdone):
+    desireddonelist = [course for course in courselist if desired_done(course.get_desired_courses(), coursesdone)]
+    if desireddonelist:
+        return desireddonelist
+    else:
+        return courselist
 
-
+def return_courses_with_exam (courselist):
+    return [course for course in courselist if course.exams]
 
 class Start_and_enddate:
     """ Class for objects with a startdate and an enddate """
@@ -189,7 +186,6 @@ class Course:
         """ returns the desired courses (pre knowledge) for the current course """
         return self.desiredcourses
 
-
     def add_required_courses(self, verplichtevoorkennis):
         """ method to add required courses for current course"""
         self.requiredcourses = verplichtevoorkennis
@@ -213,5 +209,13 @@ class Course:
         - codes of desired foreknowledge or 'geen gewenste voorkennis'
         - new line
         """
-        return str(self.code) + ', ' + str(self.title) + ', ' + str(self.period) + '\n' + str(self.requiredcourses or 'geen verplichte voorkennis') + '\n' + str(self.desiredcourses or 'geen gewenste voorkennis') + '\n'
+        if len(self.desiredcourses):
+            disered_str = "gewenste voorkennis: " + str(self.desiredcourses)
+        else:
+            disered_str = 'geen gewenste voorkennis'
+        if len(self.requiredcourses):
+            required_str = "verplichte voorkennis: " + str(self.requiredcourses)
+        else:
+            required_str = 'geen verplichte voorkennis'
+        return str(self.code) + ', ' + str(self.title) + ', ' + str(self.dates) + '\n' + required_str + '\n' + disered_str + '\n'
 
